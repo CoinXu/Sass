@@ -133,21 +133,37 @@ ________________________________________________________________________________
 + --pretty	         使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。
 + --oneline	         --pretty=oneline --abbrev-commit 的简化用法。
 
+# 撤消操作
 
+### 修改最后一次提交
+    $ git commit --amend
+    // 此命令将使用当前暂存区的快照提交
+    $ git commit -m 'initial commit'
+    $ git add forgotten_file
+    $ git commit --amend
+    // 上面三条命令只产生一个提交，第一个提交命令修正了第一个提交的内容
 
+### 取消已经暂存的文件
+     $ git reset HEAD benchmarks.rb
+### 取消对文件的修改
+    $ git checkout -- benchmarks.rb
+__________________________________________
+# 远程仓库的使用
+### 查看当前的远程库
+     $ git remote    // 如果有多个远程仓库，将全部列出
 
-
-
-
-
-
-
-
-
-
-
-
-
+### 添加远程仓库
+    // $ git remote [shortname] [url]
+    $ git remote add pb git://github.com/paulboone/ticgit.git
+### 从远程仓库抓取数据
+    $ git fetch [remote-name]
+### 推送数据到远程仓库
+    $ git push [remote-name] [branch-name]
+### 查看远程仓库信息
+    $ git remote show origin
+### 远程仓库的删除和重命名
+    $ git remote rename [current-name] [new-name]
+    $ git remote rm [remote-name]
 
 
 
