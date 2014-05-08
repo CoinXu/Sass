@@ -1,0 +1,29 @@
+﻿
+@import "shared.scss";
+
+//       elm {
+//         filter: none | <filter-function > [ <filter-function> ]* 
+//       }      
+    
+// 其默认值是none，他不具备继承性，其中filter-function一个具有以下值可选：
+
+// grayscale       灰度
+// sepia           褐色（求专业指点翻译）
+// saturate        饱和度
+// hue-rotate      色相旋转
+// invert          反色
+// opacity         透明度
+// brightness      亮度
+// contrast        对比度
+// blur            模糊(px)
+// drop-shadow     阴影(px)
+//
+// ### Example:grayscale(1);
+// 若没有指定值，将以100%来渲染
+//
+
+@mixin filter($filter){
+  @include prefix(filter, $filter,
+    -moz, -webkit, not -o, ms, official
+  );
+}

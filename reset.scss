@@ -1,0 +1,89 @@
+﻿//
+//  * Reset
+//  * --------------------------------------------------------
+//
+//   ### Usage:
+//   整站中推荐使用 `normalize` 来初始化，`reset`仅建议在局部页面或专题中使用
+//   if you wish surpport html5,set `$support-html5 = true ` in variables.scss
+//    
+//   ### Example:
+//   @include reset-global;
+//      
+//   =================================================    
+//         已测试可用，修改请备注！切切！
+//         (Coin. May 4, 2014)
+//   =================================================
+
+
+@import "variables.scss";
+@import "compatibility.scss";
+
+@mixin reset-global{
+	html, body, div, iframe, object, 
+	h1, h2, h3, h4, h5, h6, p, blockquote, 
+	dl, dt, dd, ol, ul, li, 
+	form, label, legend,
+	table, caption, tbody, tfoot, tr, th, td{
+		@include reset-box-model;
+		@include reset-font;
+		@include reset-focus;
+	}
+	@if $support-html5 {
+		@include reset-html5;
+	}
+}
+
+@mixin reset-box-model{
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+@mixin reset-body{
+	line-height: 1;
+}
+
+@mixin reset-focus{
+	outline: 0;
+}
+
+@mixin reset-font{
+	font-weight: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	vertical-align: baseline; 
+}
+
+@mixin reset-table{
+	border-collapse: separate;	// 设置边框合并模型，若要合并，取值 `collapse`
+	border-spacing: 0;			// supported with ie8++
+	vertical-align: middle;
+}
+
+@mixin reset-table-cell{
+	text-align: left;
+	font-weight: normal;
+	vertical-align: middle;
+}
+
+@mixin reset-list-style{
+	list-style: none;
+}
+
+@mixin reset-html5{
+	article, aside, details, figcaption, 
+	figure, footer ,header , hgroup, menu, nav, 
+	section, summary, main {
+		display: block;
+		@include reset-box-model;
+		@include reset-focus;
+		@include reset-font;
+	}
+	audio, canvas, video{
+		@include inline-block;
+	}
+	audio:not([controls]),[hidden]{
+		display: none;
+	}
+}

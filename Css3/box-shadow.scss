@@ -1,0 +1,38 @@
+﻿// 引入shared.scss
+@import "shared.scss";
+
+// 引入variable.scss中的 `box-shadow` 的设置
+@import "../variables.scss";
+
+@mixin box-shadow(
+	$color  : $default-box-shadow-color,              
+	$hoff   : $default-box-shadow-horizontal-offset, 
+	$voff   : $default-box-shadow-vertical-offset,    
+	$blur   : $default-box-shadow-blur,              
+	$spread : $default-box-shadow-spread,            
+	$inset  : $default-box-shadow-inset              
+){
+	@if not($inset == true or $inset == false or $inset == inset){
+		// inset 只能取这三个有效值
+		@warn "$inset expected to be true or the inset keyword. Using: inset"
+	}
+	@else{
+		$full : $hoff $voff;
+		@if $blur   { $full: $full $blur;   }
+		@if $spread { $full: $full $spread; }
+		@if $color  { $full: $full $color;  }
+		@if $inset  { $full: inset $full;   }
+		@include prefix(box-shadow, $full,
+			-webkit,
+			-moz,
+			-o,
+			-ms,
+			official
+		);
+	}	
+}
+
+// .test{
+// 	@include box-shadow(#333,1px,1px,5px,3px,inset);
+// }
+// __通过测试__

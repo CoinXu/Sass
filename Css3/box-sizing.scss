@@ -1,0 +1,22 @@
+﻿// 引入shared.scss
+@import "shared.scss";
+
+@mixin box-sizing($box-sizing){
+	$box-sizing: unquote($box-sizing);
+	// box-sizing:content-box || border-box || inherite
+	// `content-box` : 元素设定的尺寸只包含 content的尺寸，不计算`padding`,`border`。这是W3C标准Box model
+	// `border-box` : 元素设定的尺寸将`padding`,`border`计算在内。`content = width/height-border-padding`
+	@include prefix(box-sizing, $box-sizing,
+		-moz,
+		-webkit,
+		not -o,
+		not -ms,
+		official
+	);
+}
+
+// .test{
+// 	@include box-sizing(content-box);
+// }
+
+// __测试通过__

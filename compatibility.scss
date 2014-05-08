@@ -1,0 +1,20 @@
+﻿//
+// Compatibility
+// ----------------------------------
+//
+// ### Usage:
+// 解决浏览器兼容问题，如inline-block，css3前缀等
+
+@import "variables.scss";
+
+@mixin old-ie-inline-block{
+	*display: inline;
+	*zoom: 1;
+}
+
+@mixin inline-block{
+	display: inline-block;
+	@if $support-old-ie {
+		@include old-ie-inline-block();		
+	}
+}

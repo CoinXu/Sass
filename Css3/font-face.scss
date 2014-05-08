@@ -1,0 +1,31 @@
+﻿// 引入shared.scss
+@import "shared.scss";
+
+@mixin font-face(
+	$name,
+	$font-fils,
+	$old-ie : false,
+	$weight : false,
+	$style  : false
+){
+	@font-face{
+		font-family: quote($name);
+		@if $old-ie{
+			$iefont: unquote("#{old-ie}?iefix");
+			src: font-file($iefont) unquote("format('embedded-opentype')"); 
+		}
+	}
+}
+
+
+font-family: 'YourWebFontName';
+	src: url('YourWebFontName.eot'); /* IE9 Compat Modes */
+	src: url('YourWebFontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+             url('YourWebFontName.woff') format('woff'), /* Modern Browsers */
+             url('YourWebFontName.ttf')  format('truetype'), /* Safari, Android, iOS */
+             url('YourWebFontName.svg#YourWebFontName') format('svg'); /* Legacy iOS */
+// .test{
+// 	@include box-sizing(content-box);
+// }
+
+// __测试通过__

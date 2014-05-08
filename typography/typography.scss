@@ -1,0 +1,153 @@
+﻿//
+//  * Typography
+//  * --------------------------------------------------------
+//
+//   ### Usage:
+//   提供文本相关的 mixin
+//      
+//   =================================================    
+//              修改请备注！切切！
+//              经测，运行没有问题
+//             (Coin. May 4, 2014)
+//   =================================================
+//
+
+@import "../variables.scss";
+
+@mixin reset-font($font-family){
+	font-family: $font-family;
+} 
+
+@mixin ellipsis($ellipsis){
+	// legal value: ellipsis / clip / string(no support)
+	text-overflow:$ellipsis;
+}
+
+
+//
+// `force-wrap`
+//
+// 阻止长字符串（没有断行的一连串英文，比如url）打破布局
+
+@mixin force-wrap{
+	white-space: pre;            // CSS 2.0
+	white-space: pre-wrap;       // CSS 2.1
+	white-space: pre-line;       // CSS 3.0
+	white-space: -pre-wrap;      // Opera 4-6
+	white-space: -o-pre-wrap;    // Opera 7
+	white-space: -moz-pre-wrap;  // Mozilla
+	white-space: -hp-pre-wrap;   // HP Preinters
+	white-space: break-word;     // IE 5+
+}
+
+//
+//  `hide-text`
+//
+//  隐藏文字，比如用icon替换图片的时候
+
+@mixin hide-text{
+	white-space: nowrap;
+	text-indent: 100%;
+	overflow: hidden;
+	@if $support-old-ie {
+		text-align:left;
+		text-indent: -9999px;
+		overflow: hidden;
+	}
+}
+
+//
+//  `background-image`
+//
+//  设置背景图片
+
+@mixin background-image($img-url, $pos-x: 0, $pos-y: 0, $repeat: no-repeat){
+	background-image: url(unquote($img-url)) $pos-x $pos-y $repeat;
+}
+
+
+
+//
+//  `img-replace`
+//
+//  用图片替换文件，通常用做icon的样式
+
+@mixin img-replace($img-url, $pos-x: 0, $pos-y: 0, $repeat: no-repeat){
+	@include hide-text;
+	@include background-image($img-url, $pos-x, $pos-y, $repeat);			
+}
+
+//
+//  `hover-link`
+//
+//  默认无下划线，hover后加下划线
+
+@mixin hover-link{
+	text-decoration: none;
+	&:hover{
+		text-decoration: underline;
+	}
+}
+
+//
+//  `unstyled-link`
+//
+//  将链接变为默认的文字样式
+
+@mixin unstyled-link{
+	color: inherit;
+	text-decoration: inherit;
+	cursor: inherit;
+	&:active, &:focus{
+		outline: none;
+	}
+}
+
+
+//
+//  `drop-cap` 首字下沉
+//
+//  `drop-cap-inline`  行内元素下沉
+//
+//  调用方法: 
+//  `@include drop-cap-inline(20px, 2, 10px)`
+//  `@include drop-cap(20px, 2, 10px)`
+
+@mixin drop-cap-inline($line-height, $lines, $margin-right){
+		float:left;
+		font-size:$lines * 1em;
+		margin-right:$margin-right;
+}
+
+@mixin drop-cap($line-height, $lines, $margin-right){
+	&:first-letter{
+		@if $support-old-ie {
+			_display:inline;
+			_zoom:1;
+		}
+		overflow: hidden;	// 清除浮动
+		@include drop-cap-inline($line-height, $lines, $margin-right);
+	}
+}
+
+// test
+
+// .force-wrap{
+// 	@include force-wrap;
+// }
+
+// .hide-text{
+// 	@include hide-text;
+// }
+
+// .img-replace{
+// 	@include img-replace("http://xx.xx.xx", -10px, -30px, no-repeat);
+// }
+
+// .unstyled-link{
+// 	@include unstyled-link;
+// }
+
+// .drop-cap{
+// 	@include drop-cap(20px, 2, 10px);
+// }

@@ -1,0 +1,18 @@
+﻿// css3共享文件，需要写前缀的样式，都要用到这个文件
+@import "../support.scss";
+
+@mixin prefix($property, $value,
+	$moz      : $support-for-mozilla,
+	$webkit   : $support-for-webkit,
+	$o        : $support-for-opera,
+	$ms       : $support-for-microsoft,
+	$official : true	
+){
+	@if $webkit    and  $support-for-webkit      {  -webkit-#{$property} : $value;}
+	@if $moz       and  $support-for-mozilla     {     -moz-#{$property} : $value;} 
+    @if $ms        and  $support-for-microsoft   {      -ms-#{$property} : $value;} 	  
+	@if $o         and  $support-for-opera       {       -o-#{$property} : $value;}
+	@if $official	                             {          #{$property} : $value;}
+}
+
+

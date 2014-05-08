@@ -1,0 +1,76 @@
+﻿// Use @mixin prefix
+@import "shared.scss";
+
+// Use $default-border-radius
+@import "../varibles.scss"
+
+@mixin border-radius($radius: $default-border-radius, $vertical-value: false){
+	@if $vertical-value{
+		// 如果是webkit低版本，需要用到first-value-of
+		// 这个我不知道是不是真的，因为我手上没有mac，这是compass上面的兼容，就照写下来了
+		@include prefix(border-radius, first-value-of($radius) first-value-of($vertical-value),
+			-webkit,	// 此处只输出 -webkit，其他的全部用 not 设为false
+			not -moz,   
+			not -ms,
+			not -o,
+			not official	
+		);
+		// 官方标准是要用`/`把值分开？这是低版本的问题么？莫有发现啊。
+		// 小爷Css3写得少，没注意这些，先就这么着，以后发现问题了再来改
+		@include prefix("border-radius", $radius unquote("/") $vertical-value,
+			not -webkit,
+			-moz,
+			not -ms,
+			not -o,
+			official
+		);			
+	}@else{
+		@include prefix(border-radius, $radius);
+	}	
+}
+
+
+// 增加一个可以定义 radius 位置的混合。
+// 接受三个参数 `$vertical`, `horizontal`, `border radius`
+// `vertical`    可以是： `top`, `bottom` (legal)
+// `horizontal`  可以是： `left`, `right`
+
+@mixin border-corner-radius($vertical, $horizontal, $radius: $default-border-radius){
+	// mozilla的写法是 `border-radius-#{$vertical}#{$horizontal}:value`
+	// 这尼玛是多么古老的mozilla才有的特性？支不支持，这是个问题....
+
+	@include prefix("border-radius-#{$vertical}-#{$horizontal}", $radius,
+		-moz,
+		not -webkit,
+		not -ms,
+		not -o,
+		not official
+	);
+	@include prefix("border-#{$vertical}-#{$horizontal}-radius", $radius,
+		not -moz,
+		-webkit,
+		not -o,
+		not -ms,
+		official
+	);
+}
+
+// Round top-left corner only
+@mixin border-top-left-radius($radius: $default-border-radius){
+	@include border-corner-radius(top, left, $radius);
+}
+
+// Round top-right corner only
+@mixin border-top-right-radius($radius: $default-border-radius){
+	@include border-corner-radius(top, right, $radius);
+}
+
+// Round bottom-left corner only
+@mixin border-bottom-left-radius($radius: $default-border-radius){
+	@include border-corner-radius(bottom, left, $radius);
+}
+
+// Round bottom-right corner only
+@mixin border-bottom-right-radius($radius: $default-border-radius){
+	@include border-corner-radius(bottom, right, $radius);
+}
