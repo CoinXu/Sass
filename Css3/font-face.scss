@@ -3,29 +3,73 @@
 
 @mixin font-face(
 	$name,
-	$font-fils,
-	$old-ie : false,
+	$font-files,
+	$eot : false,
 	$weight : false,
 	$style  : false
 ){
+	// 调用此函数时，需要有 `.eot, .woff, .ttf, .svg` 四种字体在同一目录下，并且同名
+	// $font-files 格式 : http:// ..../fontName(后面不要写类型)
+
 	@font-face{
-		font-family: quote($name);
-		@if $old-ie{
-			$iefont: unquote("#{old-ie}?iefix");
-			src: font-file($iefont) unquote("format('embedded-opentype')"); 
+		font-family: unquote($name);
+
+		$src:unquote('');	
+		$font-face-list: "woff", "ttf", "svg", "eot";
+		$loop-number: 0;
+
+		@each $font-face in $font-face-list {
+			$loop-number:$loop-number + 1;
+
+			$font-type: unquote(".")#{$font-face};
+			$format: $font-face;
+			$comma: unquote(",");
+
+			@if $font-face == 'ttf' {
+				$format: 'truetype';
+			}
+			// 如果要支持ie6-8;
+			@if $eot and $font-face == 'eot'{
+				$format: 'embedded-opentype';
+				$iefont: unquote("?#iefix");
+				$font-type:$font-type#{$iefont};
+			}
+			// 最后一个不需要 `,`;
+			@if $loop-number == length($font-face-list) {
+				$comma: unquote('');
+			}
+			$temp-src-string: url(unquote($font-files)#{$font-type}) format(quote($format))$comma;
+			$src:$src $temp-src-string;
+		}
+		// 赋值给 `src`
+		src:$src;
+
+		@if $weight {
+			font-weight: $weight;
+		}
+		@if $style {
+			font-style: $style;
 		}
 	}
 }
 
+// src:
+// url(http://g.tbcdn.cn/mui/global/1.2.10/iconfont/iconfont.eot?#iefix) format('embedded-opentype'),
+// url(http://g.tbcdn.cn/mui/global/1.2.10/iconfont/iconfont.woff) format('woff'),
+// url(http://g.tbcdn.cn/mui/global/1.2.10/iconfont/iconfont.ttf) format('truetype'),
+// url(http://g.tbcdn.cn/mui/global/1.2.10/iconfont/iconfont.svg#svgFontName) format('svg')
 
-font-family: 'YourWebFontName';
-	src: url('YourWebFontName.eot'); /* IE9 Compat Modes */
-	src: url('YourWebFontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-             url('YourWebFontName.woff') format('woff'), /* Modern Browsers */
-             url('YourWebFontName.ttf')  format('truetype'), /* Safari, Android, iOS */
-             url('YourWebFontName.svg#YourWebFontName') format('svg'); /* Legacy iOS */
-// .test{
-// 	@include box-sizing(content-box);
-// }
+// font-family: 'YourWebFontName';
+// 	src: url('YourWebFontName.eot'); /* IE9 Compat Modes */
+// 	src: url('YourWebFontName.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+//              url('YourWebFontName.woff') format('woff'), /* Modern Browsers */
+//              url('YourWebFontName.ttf')  format('truetype'), /* Safari, Android, iOS */
+//              url('YourWebFontName.svg#YourWebFontName') format('svg'); /* Legacy iOS */
+
+
+
+// Test
+//	@include font-face(name,'http://...name',true,bold,normal);
+//
 
 // __测试通过__

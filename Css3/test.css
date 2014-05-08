@@ -1,0 +1,5 @@
+@font-face {
+  font-family: name;
+  src:  url(http://...name.woff) format("woff") , url(http://...name.ttf) format("truetype") , url(http://...name.svg) format("svg") , url(http://...name.eot?#iefix) format("embedded-opentype") ;
+  font-weight: bold;
+  font-style: normal; }
