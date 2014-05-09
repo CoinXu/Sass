@@ -1,0 +1,485 @@
+﻿
+@import "shared.scss";
+
+// Transform属性应用于元素的2D或3D转换。这个属性允许你将元素旋转，缩放，移动，倾斜等
+
+// transform ： none | <transform-function> [ <transform-function> ]* 
+
+
+
+/*  ======== transform function ==========
+
+	none
+// ---------  矩阵  ---------------------------------------
+	matrix(n,n,n,n,n,)	    // 2D转换，6个值的矩阵           | matrix(<number>, <number>, <number>, <number>, <number>, <number>)
+	matrix3d(n,n,n,n,n...)	// 3D转换，16个值的 4x4 矩阵
+
+// ---------  移动  ---------------------------------------
+	translate(x,y)          // 定义2D转换
+	translate3d(x,y,z)      // 3D转换                        | translate3d(<translation-value>, <translation-value>, <translation-value>)
+	translateX(x)           // X轴的转换
+	translateY(y)           // Y轴的转换
+	translateZ(x)			// 
+	
+// ---------  缩放  ---------------------------------------
+	scale(x,y)              // 定义2D缩放转换
+	scale3d(x,y,z)          // 定义3D缩放转换
+	scaleX(x)               // 通过X轴的值定义缩放转换
+	scaleY(y)               // 通过Y轴的值来定义缩放转换
+	scaleZ(z)               // 通过X轴的值来定义3D缩放转换
+
+// ---------  旋转  ---------------------------------------
+	rotate(angle)           // 定义角度来设置2D旋转
+	rotate3d(x,y,z,angle)   // 定义3D旋转
+	rotateX(angle)          // 沿着X轴的3D旋转
+	rotateY(angle)          //
+	rotateZ(angle)          //
+
+// ---------  倾斜  ---------------------------------------
+	skew(x-angle,y-angle)   // 沿着 x 和 y 的2D倾斜转换
+	skewX(angle)            // 沿着x轴的2D倾斜转换
+	skewY(angle)            // Y轴的2D倾斜转换
+
+	perspective(n)          // 为3D转换元素定义透视视图
+*/
+
+/* =============================================
+ 		经测，scale及rotate3d，大多都不被支持
+ 		不建议用这个规则
+   ============================================== */
+
+
+/* transform-origin: 
+// legal value:
+// [ 
+     [ 
+	   [ <percentage> | <length> | left | center | right ]
+	   [ <percentage> | <length> | top | center | bottom ]? 
+	 ] <length> 
+   ]
+
+     |
+
+   [ 
+      [ 
+        [ left | center | right ] || [ top | center | bottom ] 
+      ] <length> 
+   ]
+*/
+
+// ------------------------------------------------
+//		默认值
+// ------------------------------------------------
+
+// 默认 translation value
+
+$defalute-translation-x   : 1em                         !default;
+$defalute-translation-y   : $defalute-translation-x     !default;
+$defalute-translation-z   : $defalute-translation-x     !default;
+
+// 默认 scale 
+$default-scale-x          : 1.25                        !default; 
+$default-scale-y          : $default-scale-x            !default;
+$default-scale-z          : $default-scale-x            !default;
+
+// 默认 rotate angle
+$default-rotate-angle     : 45deg                       !default;
+$default-rotate-vector-x  : 1                           !default;
+$default-rotate-vector-y  : $default-rotate-vector-x    !default;
+$default-rotate-vector-z  : $default-rotate-vector-x    !default;
+
+// 默认 skew
+$default-skew-x           : 5deg                        !default;
+$default-skew-y           : 5deg                        !default;
+
+// 默认 origin
+$default-origin-x         : 50%                         !default;
+$default-origin-y         : $default-origin-x           !default;
+$default-origin-z         : $default-origin-x           !default;
+
+
+//
+// transform 前缀的 function 通用
+@mixin transform($function-and-value){
+	@include prefix(transform, $function-and-value,
+		-ms, -moz, -webkit, -o, official
+	);	
+}
+
+
+
+/*  ====================================================
+		translate  平移
+    ====================================================  */ 
+
+
+@mixin translate(
+	$translate-x: $default-translation-x,
+	$translate-y: $defaulte-translation-y,
+	$perspective: false
+){
+	$trans: translate($translate-x, $translate-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);	
+}
+
+
+@mixin translate3d(
+	$translate-x: $defaulte-translation-x,
+	$translate-y: $defaulte-translation-y,
+	$translate-z: $defaulte-translation-z,
+	$perspective: false
+){
+	$trans: translate3d($translate-x, $translate-y, $translate-z);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin translateX(
+	$translate-x: $defaulte-translation-x,
+	$perspective: false
+){
+	$trans: translateX($translate-x);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin translateY(
+	$translate-y: $defaulte-translation-y,
+	$perspective: false
+){
+	$trans: translateY($translate-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+
+@mixin translateZ(
+	$translate-z: $defaulte-translation-z,
+	$perspective: false
+){
+	$trans: translateZ($translate-z);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+/*  ====================================================
+		scale 缩放
+    ====================================================  */ 
+
+@mixin scale(
+	$scale-x: $defaulte-scale-x,
+	$scale-y: $defaulte-scale-y,
+	$perspective: false
+){
+	$trans: scale($scale-x, $scale-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+// scale3d 浏览器大都不支持
+@mixin scale3d(
+	$scale-x: $defaulte-scale-x,
+	$scale-y: $defaulte-scale-y,
+	$scale-z: $defaulte-scale-z,
+	$perspective: false
+){
+	$trans: scale3d($scale-x, $scale-y, $scale-z);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin scaleX(
+	$scale-x: $defaulte-scale-x,
+	$perspective: false
+){
+	$trans: scaleX($scale-x);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin scaleY(
+	$scale-y: $defaulte-scale-y,
+	$perspective: false
+){
+	$trans: scaleY($scale-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin scaleZ(
+	$scale-z: $defaulte-scale-z,
+	$perspective: false
+){
+	$trans: scaleX($scale-z);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+/*  ====================================================
+		rotate 旋转
+    ====================================================  */ 
+
+@mixin rotate(
+	$angle: $default-rotate-angle,
+	$perspective: false
+){
+	$trans: rotate($angle);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin rotate3d(
+	$vector-x: $default-rotate-vector-x,
+	$vector-y: $default-rotate-vector-y,
+	$vector-z: $default-rotate-vector-z,
+	$rotate  : $defalut-rotate-angle,
+	$perspective:false
+){
+	$trans: rotate3d($vector-x, $vector-y, $vector-z, $rotate );
+	@if $perspective {
+		$trans: perspective($perspective) $trans;    // perspective 一定要放在前面
+	}
+	@include transform($trans);
+}
+
+
+@mixin rotateX(
+	$angle: $default-rotate-angle,
+	$perspective: false
+){
+	$trans: rotateX($angle);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin rotateY(
+	$angle: $default-rotate-angle,
+	$perspective: false
+){
+	$trans: rotateY($angle);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin rotateZ(
+	$angle: $default-rotate-angle,
+	$perspective: false
+){
+	$trans: rotateZ($angle);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+/*  ====================================================
+		skew 倾斜
+    ====================================================  */ 
+
+
+@mixin skew(
+	$skew-x: $default-skew-x,
+	$skew-y: $default-skew-y,
+	$perspective: false
+){
+	$trans: skew($skew-x, $skew-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin skewX(
+	$skew-x: $default-skew-x,
+	$perspective: false
+){
+	$trans: skewX($skew-x);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+@mixin skewY(
+	$skew-x: $default-skew-y,
+	$perspective: false
+){
+	$trans: skewY($skew-y);
+	@if $perspective {
+		$trans: perspective($perspective) $trans;
+	}
+	@include transform($trans);
+}
+
+
+/*  ====================================================
+		transform-origin
+    ====================================================  */ 
+
+
+@mixin transform-origin(
+	$origin-x: $default-origin-x,
+	$origin-y: $default-origin-y,
+	$origin-z: false
+){
+	$origin: unquote('');
+	@if $origin-x or $origin-y or $origin-z{
+		@if $origin-x { $origin: $origin-x;} @else {$origin: 50%}
+		@if $origin-y { $origin: $origin $origin-y;} @else { $origin: $origin 50%;}
+		@if $origin-z { $origin: $origin $origin-z}
+	}	
+	@include prefix(transform-origin, $origin);		
+}
+
+
+/*  ====================================================
+		给 transform 添加多个 function
+    ====================================================  */ 
+
+@mixin create-transform(
+	$perspective:     false,
+
+	$translate-x:     false,
+	$translate-y:     false,
+	$translate-z:     false,
+
+	$skew-x:          false,
+	$skew-y:          false,
+
+    $rotate-x:        false,
+    $rotate-y:        false,
+    $rotate-z:        false,
+    $rotate3d:        false,
+
+    $scale-x:         false,
+    $scale-y:         false,
+    $scale-z:         false,
+    $scale3d:         false,
+
+    $origin-x:        false,
+    $origin-y:        false,
+    $origin-z:        false
+){
+	$trans: unquote('');
+	@if $perspective { $trans: perspective($perspective); }
+
+	// translate
+	@if $translate-x and $translate-y {
+		@if $translate-z { $trans: $trans translate3d($translate-x, $translate-y, $translate-z);}
+		@else{
+			$trans: $trans traslate($translate-x, $translate-y);		
+		}
+	}@else{
+		@if $translate-x { $trans: $trans translateX($translate-x);}
+		@if $translate-y { $trans: $trans translateY($translate-y);}
+		@if $translate-z { $trans: $trans translateZ($translate-z);}
+	}
+
+	// skew
+	@if $skew-x and $skew-y {
+		$trans: skew($skew-x, $skew-y);
+	}@else{
+		@if $skew-x { $trans: $trans skewX($skew-x);}
+		@if $skew-y { $trans: $trans skewY($skew-y);}
+	}
+
+	// rotate
+
+	@if $rotate-x { $trans: $trans rotateX($rotate-x);}
+	@if $rotate-y { $trans: $trans rotateY($rotate-y);}
+	@if $rotate-z { $trans: $trans rotateZ($rotate-z);}
+	@if $rotate3d { $trans: $trans rotate3d($rotate3d);}
+
+
+	// scale
+	@if $scale-x and $scale-y {
+		@if $scale-z { $trans: $trans scale3d($scale-x, $scale-y, $scale-z);}
+		@else{
+			$trans: $trans scale($scale-x, $scale-y);		
+		}
+	}@else{
+		@if $scale-x { $trans: $trans scaleX($scale-x);}
+		@if $scale-y { $trans: $trans scaleY($scale-y);}
+		@if $scale-z { $trans: $trans scaleZ($scale-z);}
+	}
+	
+	// apply
+	@include transform($trans);
+	@include transform-origin($origin-x, $origin-y, $origin-z);
+}
+
+
+@mixin simple-transform(		
+	$translate-x: false,
+	$translate-y: false,	
+
+	$skew-x:      false,
+	$skew-y:      false,	
+
+	$rotate:      false,	
+	$scale:       false,
+
+	$origin-x:    false,
+	$origin-y:    false		
+){
+	@include create-transform(
+		false,
+		$translate-x, $translate-y, false,
+		$skew-x, $skew-y,
+		$rotate, $rotate, false, false,
+		$scale, $scale, false, false,
+		$origin-x, $origin-y, false
+	);
+}
+
+//
+// .test{
+// 	@include create-transform(100px,100px,100px,false,20deg,45deg,20deg,20deg,false,false,1.5,1,2,flase,center,top);
+// }
+//
+// ==========================================================
+//        测试可用
+//        Coin. May 9, 2014
+// ==========================================================
