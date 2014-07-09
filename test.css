@@ -1,8 +1,0 @@
-@charset "UTF-8";
-/* ================================================
-		测试可用，修改请备注
-		 Coin. May 7,2014.
-   ================================================	
-*/
-.test {
-  background: compatch(white, url("http://www.xx.xx/"), no-repeat, center, center, content-box, padding-box, 100px, 60px); }

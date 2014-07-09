@@ -15,25 +15,56 @@
 //              经测，运行没有问题
 //             (Coin. May 4, 2014)
 // =================================================
-
 @import "variables.scss";
+
+//
+// font-size-zero
+// 设置 `font-size:0` 兼容 safari
+// 调用 `font-size-zero($class-name, $default-font-size-element)`
+// Note:
+// $class-name: 需要设置 font-size:0 的 className
+// $default-font-size-element: 需要设置正常字体的 element
+//
+
+@mixin font-size-zero($class-name, $default-font-size-element) {
+    $truth-class-name: unquote($class-name);
+    $truth-default-font-size-element: unquote($default-font-size-element);
+
+    #{$truth-class-name} {
+        font-size: 0;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        #{$truth-class-name} {
+            letter-spacing: -5px;
+        }
+        #{$default-font-size-element} {
+            letter-spacing: normal;
+        }
+    }
+
+    #{$truth-default-font-size-element} {
+        font-size: $default-font-size;
+    }
+
+}
 
 // clearfix via http://h5bp.com/q
 // 对比了 compass 和 est，此处取 est 的写法
 // compass 的写法考虑的地方太多，这里的项目暂时用不上。
 
-@mixin clearfix{
-	&:before,
-	&:after{
-		display: table;
-		content:"";
-	}
-	&:after{
-		clear:both;
-	}
-	@if $support-old-ie {
-		*zoom:1;
-	}
+@mixin clearfix {
+    &:before,
+    &:after {
+        display: table;
+        content: "";
+    }
+    &:after {
+        clear: both;
+    }
+    @if $support-old-ie {
+        *zoom: 1;
+    }
 }
 
 //  `set-size` ：设置元素的尺寸，前提是元素是 `block` 或者 `inline-block`
@@ -41,30 +72,30 @@
 //  `set-size(20px)`
 //  `set-size(20px 30px)`
 
-@mixin set-size($width, $height:auto){
-	width: $width;
-	@if $height == auto {
-		height:$width;	
-	}@else{
-		height: $height;
-	}	
+@mixin set-size($width, $height: auto) {
+    width: $width;
+    @if $height == auto {
+        height: $width;
+    } @else {
+        height: $height;
+    }
 }
 
 //
 // `no-bullet` 去掉 `li` 的样式
 // `no-bullet` 去掉整个 `list` 的样式，用于 `ol/ul`
 
-@mixin no-bullet{
-	list-style-image: none;
-	list-style-type: none;
-	margin-left:0;
+@mixin no-bullet {
+    list-style-image: none;
+    list-style-type: none;
+    margin-left: 0;
 }
 
-@mixin no-bullest{
-	list-style:none;
-	li{
-		@include no-bullet;
-	}
+@mixin no-bullest {
+    list-style: none;
+    li {
+        @include no-bullet;
+    }
 }
 
 //
@@ -77,24 +108,23 @@
 //     @include layout-fixed-header($height);
 // }
 
-@mixin layout-fixed-header($height: auto, $header-z-index:999){
-	@at-root {
-		.Cx-header{
-			position:fixed;
-			top:0;
-			left:0;
-			width:100%;
-			height:$height;
-			z-index: $header-z-index;
-		}
+@mixin layout-fixed-header($height: auto, $header-z-index: 999) {
+    @at-root {
+        .Cx-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: $height;
+            z-index: $header-z-index;
+        }
 
-		.Cx-main{
-			@include clearfix;
-			margin-top:$height;
-		}
-	}
+        .Cx-main {
+            @include clearfix;
+            margin-top: $height;
+        }
+    }
 }
-
 
 //
 // `layout-fixed-header`
@@ -105,47 +135,46 @@
 //     @include layout-fixed-header($height);
 // }
 
-@mixin layout-fixed-footer($height: auto, $header-z-index:999){
-	@at-root {
-		.Cx-footer{
-			position:fixed;
-			bottom:0;
-			left:0;
-			width:100%;
-			height:$height;
-			z-index: $header-z-index;
-		}
+@mixin layout-fixed-footer($height: auto, $header-z-index: 999) {
+    @at-root {
+        .Cx-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: $height;
+            z-index: $header-z-index;
+        }
 
-		.Cx-main{
-			@include clearfix;
-			margin-bottom:$height;
-		}
-	}
+        .Cx-main {
+            @include clearfix;
+            margin-bottom: $height;
+        }
+    }
 }
 
 //
 // `layout-align-center`
 // 居中对齐
 
-@mixin layout-align-center($width){
-	width: $width;
-	margin-left:auto;
-	margin-right:auto;	
+@mixin layout-align-center($width) {
+    width: $width;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 
 //
 // `layout-absolute-direction($direction)`
 
-@mixin layout-absolute-direction($width, $height, $direction-horizontal, $direction-vertical){
-	position:absolute;
-	#{$direction-horizontal}: 0;
-	#{$direction-vertical}: 0;
-	width: $width;
-	height: $height;
-	&{
-		position:relative;
-	}
+@mixin layout-absolute-direction($width, $height, $direction-horizontal, $direction-vertical) {
+    position: absolute;
+    #{$direction-horizontal}: 0;
+    #{$direction-vertical}: 0;
+    width: $width;
+    height: $height;
+    & {
+        position: relative;
+    }
 }
 
 //
@@ -156,88 +185,71 @@
 // html的结构为 `layout-horizontal-list > ul/ol > li`
 //
 
-@mixin layout-horizontal-list($direction: left, $gap:10px){
-	@include clearfix;
-	overflow:hidden;
-	$margin-direction:"";
+@mixin layout-horizontal-list($direction: left, $gap: 10px) {
+    @include clearfix;
+    overflow: hidden;
+    $margin-direction: "";
 
-	@if $direction == left {
-		$margin-direction: right;
-	}@else{
-		$margin-direction: left;
-	}
+    @if $direction == left {
+        $margin-direction: right;
+    } @else {
+        $margin-direction: left;
+    }
 
-	ul{
-		list-style:none;
-		float:$direction;
-		margin-#{$margin-direction}: -$gap;		
-		li{
-			margin-#{$margin-direction}: $gap;
-			float: $direction;
-		}
-	}
-	@if $support-old-ie {
-		_display:inline;
-	}	
-} 
-
+    ul {
+        list-style: none;
+        float: $direction;
+        margin-#{$margin-direction}: -$gap;
+        li {
+            margin-#{$margin-direction}: $gap;
+            float: $direction;
+        }
+    }
+    @if $support-old-ie {
+        _display: inline;
+    }
+}
 
 // =================================================
 // ### 文字效果
 // =================================================
 
-
 // 文字浮凸效果
 
-@mixin embossed-text($color){
-	color:lighten($color, 50%);
-	background-color:$color;
-	text-shadow:
-	0 1px 1px rgba(0, 0, 0, 0.5),
-	0 -1px 0 rgba(255,255,255,0.5);
+@mixin embossed-text($color) {
+    color: lighten($color, 50%);
+    background-color: $color;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5),
+        0 -1px 0 rgba(255, 255, 255, 0.5);
 }
 
 // 文字凹陷效果
-@mixin debossed-text($color){
-	color:draken($color, 50%);
-	background-color:$color;
-	text-shadow:
-	0 1px 1px $color,
-	0 0 0 #000,
-	0 1px 0 rgba(255,255,255,.8);	
+@mixin debossed-text($color) {
+    color: draken($color, 50%);
+    background-color: $color;
+    text-shadow: 0 1px 1px $color, 0 0 0 #000, 0 1px 0 rgba(255, 255, 255, .8);
 }
 
 // 3d文字效果
-@mixin threeD-text($color){
-	color:lighten($color, 50%);
-	background-color:$color;
-	text-shadow: 0 1px 0 ($color -#272727),
-                 0 2px 0 ($color - #303030),
-                 0 3px 0 ($color - #393939),
-                 0 4px 0 ($color - #424242),
-                 0 5px 0 ($color - #5b5b5b),
-                 0 6px 1px rgba(0, 0, 0, 0.1),
-                 0 0 5px rgba(0, 0, 0, 0.1),
-                 1px 1px 3px rgba(0, 0, 0, 0.3),
-                 3px 3px 5px rgba(0, 0, 0, 0.2),
-                 5px 5px 10px rgba(0, 0, 0, 0.25),
-                 0 10px 10px rgba(0, 0, 0, 0.2),
-                 0 20px 20px rgba(0, 0, 0, 0.15);	
+@mixin threeD-text($color) {
+    color: lighten($color, 50%);
+    background-color: $color;
+    text-shadow: 0 1px 0 ($color -#272727), 0 2px 0 ($color - #303030), 0 3px 0 ($color - #393939), 0 4px 0 ($color - #424242), 0 5px 0 ($color - #5b5b5b), 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1), 1px 1px 3px rgba(0, 0, 0, 0.3), 3px 3px 5px rgba(0, 0, 0, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.15);
 }
 
 // 文本发光效果
-@mixin glow-text($color: #175fcc, $radius: 5px){
-	text-shadow: 0 0 $radius $color;
-	background-color: darken($color, 50%);
+@mixin glow-text($color: #175fcc, $radius: 5px) {
+    text-shadow: 0 0 $radius $color;
+    background-color: darken($color, 50%);
 }
 
 // 文本模糊效果
 
-@mixin blurry-text($color, $radius: 0.15em){
-	color:transparent;
-	background-color: darken($color, 50%);
-	text-shadow: 0 0 $radius $color;
-	// 0.1px of spread distance made the shadow visible under IE10
-	text-shadow: 0 0 $radius 0.1px $color;
+@mixin blurry-text($color, $radius: 0.15em) {
+    color: transparent;
+    background-color: darken($color, 50%);
+    text-shadow: 0 0 $radius $color;
+    // 0.1px of spread distance made the shadow visible under IE10
+    text-shadow: 0 0 $radius 0.1px $color;
 }
 

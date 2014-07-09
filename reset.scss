@@ -31,6 +31,9 @@
 	@if $support-html5 {
 		@include reset-html5;
 	}
+	dl, dt, dd, ol, ul, li{
+		@include reset-list-style;	
+	}
 }
 
 @mixin reset-box-model{

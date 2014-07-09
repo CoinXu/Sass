@@ -1,0 +1,49 @@
+﻿// 引入shared.scss
+@import "shared.scss";
+
+// box-align	          指定如何对齐一个框的子元素	                           start | end | center | baseline | stretch
+// box-direction	      指定在哪个方向，显示一个框的子元素	                   normal|reverse|inherit;
+// box-flex	              指定一个框的子元素是否是灵活的或固定的大小               value: number	
+// box-flex-group	      指派灵活的元素到Flex组	                               显示的位置:index  `0 ~ num`
+// box-lines	          每当它在父框的空间运行时，是否指定将再上一个新的行列	   single|multiple  
+// box-ordinal-group	  指定一个框的子元素的显示顺序	
+// box-orient	          指定一个框的子元素是否在水平或垂直方向应铺设	           horizontal|vertical|inline-axis|block-axis|inherit;
+// box-pack	              指定横向盒在垂直框的水平位置和垂直位置                   start|end|center|justify;
+
+
+@mixin box-align(
+	$box-align, $box-pack
+)
+{
+	display: -ms-flexbox;	// ie 10
+	@include prefix(display, box);
+	@include prefix(box-align, $box-align);
+	@include prefix(box-pack, $box-pack);
+}
+
+@mixin box-direction($direction){
+	@include prefix(box-direction, $direction);
+}
+
+@mixin box-flex($flex){
+	@include prefix(box-flex, $flex);
+}
+
+@mixin box-flex-group($index){
+	@include prefix(box-flex-group, $index);
+}
+
+@mixin box-lines($lines){
+	@include prefix(box-lines, $lines);
+}
+
+@mixin box-orient($lines){
+	@include prefix(box-lines, $lines);
+}
+
+
+// .test{
+// 	@include box-sizing(content-box);
+// }
+
+// __测试通过__

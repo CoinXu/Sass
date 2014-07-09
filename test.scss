@@ -1,6 +1,0 @@
-﻿@import "all.scss";
-
-$support-for-ie6: true;
-.test{
-	@include background(#fff,url("http://www.xx.xx/"),no-repeat,center,center,content-box,padding-box,100px,60px);
-}

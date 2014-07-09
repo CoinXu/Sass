@@ -29,16 +29,16 @@
 @mixin global-normalize{
     /*! normalize.css v1.1.2 | MIT License | git.io/normalize */
 
-    /* ==========================================================================
-       Base
-       ========================================================================== */
+    // ==========================================================================
+    //   Base
+    // ==========================================================================
 
-    /**
-     * 1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
-     *    `em` units.
-     * 2. Prevent iOS text size adjust after orientation change, without disabling
-     *    user zoom.
-     */
+  //
+  //  1. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
+  //     `em` units.
+  //  2. Prevent iOS text size adjust after orientation change, without disabling
+  //       user zoom.
+  //
 
     html {
         font-size: 100%; /* 1 */
@@ -56,7 +56,7 @@
     input,
     select,
     textarea {
-        @include reset-font($default-base-font-family);
+        @include reset-set-font($default-base-font-family);
     }
 
     /**
@@ -184,7 +184,7 @@
     kbd,
     pre,
     samp {
-        @include reset-font($default-code-font-family);
+        @include reset-set-font($default-code-font-family);
         font-size: 1em;
     }
 

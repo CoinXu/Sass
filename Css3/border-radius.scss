@@ -2,7 +2,7 @@
 @import "shared.scss";
 
 // Use $default-border-radius
-@import "../varibles.scss"
+@import "../variables.scss";
 
 @mixin border-radius($radius: $default-border-radius, $vertical-value: false){
 	@if $vertical-value{
@@ -64,6 +64,7 @@
 @mixin border-top-right-radius($radius: $default-border-radius){
 	@include border-corner-radius(top, right, $radius);
 }
+
 
 // Round bottom-left corner only
 @mixin border-bottom-left-radius($radius: $default-border-radius){

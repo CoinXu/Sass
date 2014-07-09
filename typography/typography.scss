@@ -14,7 +14,7 @@
 
 @import "../variables.scss";
 
-@mixin reset-font($font-family){
+@mixin reset-set-font($font-family){
 	font-family: $font-family;
 } 
 

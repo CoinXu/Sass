@@ -17,5 +17,15 @@
 // background-size        规定背景图片的尺寸。3
 
 @mixin background($color, $imageUrl, $repeat, $PosX, $PosY, $size, $origin, $clip, $attachment){
-  background: compatch($color, $imageUrl, $repeat, $PosX, $PosY, $size, $origin, $clip, $attachment);
+	$value: unquote("");
+	@if $color { $value: $value $color; }
+	@if $imageUrl { $value: $value $imageUrl; }
+	@if $repeat   { $value: $value $repeat; }
+	@if $PosX     { $value: $value $PosX; }
+	@if $PosY     { $value: $value $PosY; }
+	@if $size     { $value: $value $size; }
+	@if $origin   { $value: $value $origin; }
+	@if $clip     { $value: $value $clip; }
+	@if $attachment { $value: $value $attachment; }
+  background: $value;
 }

@@ -13,6 +13,7 @@
 }
 
 @mixin inline-block{
+	vertical-align:top;
 	display: inline-block;
 	@if $support-old-ie {
 		@include old-ie-inline-block();		
