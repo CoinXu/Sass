@@ -83,7 +83,7 @@
 
 //
 // `no-bullet` 去掉 `li` 的样式
-// `no-bullet` 去掉整个 `list` 的样式，用于 `ol/ul`
+// `no-bullest` 去掉整个 `list` 的样式，用于 `ol/ul`
 
 @mixin no-bullet {
     list-style-image: none;
@@ -91,7 +91,7 @@
     margin-left: 0;
 }
 
-@mixin no-bullest {
+@mixin no-bullets {
     list-style: none;
     li {
         @include no-bullet;

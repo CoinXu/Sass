@@ -16,7 +16,10 @@
 )
 {
 	display: -ms-flexbox;	// ie 10
-	@include prefix(display, box);
+	display: -webkit-box;	// ios6- safari 3.1-6
+	display: -webkit-flex;	// new chrome
+	display: flex;			// new,spec-opera 12.1
+	
 	@include prefix(box-align, $box-align);
 	@include prefix(box-pack, $box-pack);
 }

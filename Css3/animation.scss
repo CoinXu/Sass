@@ -111,12 +111,6 @@ $default-animation-play-state:               running                !default;
 			);	
 }
 
-@mixin animation-direction($direction: $default-animation-direction){
-	@include prefix(animation-direction, $direction,
-				-webkit, -ms, -moz, -o, official
-			);	
-}
-
 @mixin animation-play-state($play-state: $default-animation-play-state){
 	@include prefix(animation-play-state, $play-state,
 				-webkit, -ms, -moz, -o, official
